@@ -1,0 +1,6 @@
+@EncryptedMessenger_HostAddress = http://localhost:5052
+
+GET {{EncryptedMessenger_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
