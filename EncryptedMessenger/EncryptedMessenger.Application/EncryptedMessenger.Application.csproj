@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EncryptedMessenger.Domain\EncryptedMessenger.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Servicies\" />
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
 </Project>

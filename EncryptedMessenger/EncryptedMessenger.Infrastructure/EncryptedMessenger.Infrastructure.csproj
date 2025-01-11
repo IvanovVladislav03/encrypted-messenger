@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EncryptedMessenger.Application\EncryptedMessenger.Application.csproj" />
+    <ProjectReference Include="..\EncryptedMessenger.Domain\EncryptedMessenger.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Persistence\" />
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
 </Project>

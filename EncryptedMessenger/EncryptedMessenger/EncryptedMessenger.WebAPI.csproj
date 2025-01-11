@@ -10,4 +10,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EncryptedMessenger.Application\EncryptedMessenger.Application.csproj" />
+    <ProjectReference Include="..\EncryptedMessenger.Infrastructure\EncryptedMessenger.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
