@@ -11,6 +11,7 @@ namespace EncryptedMessenger.Domain.Models
         public Guid Id { get; set; }
         public string ChatName { get; set; } = string.Empty;
         public bool IsGroup { get; set; }
+        public string PublicKey { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
 }
