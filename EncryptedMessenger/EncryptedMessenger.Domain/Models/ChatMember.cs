@@ -11,8 +11,8 @@ namespace EncryptedMessenger.Domain.Models
         public Guid Id { get; set; }
         public Guid ChatId { get; set; }
         public required Chat Chat { get; set; }
-        public Guid MemberId { get; set; }
-        public required User Member { get; set; }
+        public Guid UserId { get; set; }
+        public required User User { get; set; }
         public DateTime AddedAt { get; set; }
     }
 }

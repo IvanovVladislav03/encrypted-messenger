@@ -13,5 +13,9 @@ namespace EncryptedMessenger.Domain.Models
         public bool IsGroup { get; set; }
         public string PublicKey { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
+
+        public ICollection<ChatMember> ChatMembers { get; set; } = new List<ChatMember>();
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
+
     }
 }

@@ -11,9 +11,10 @@ namespace EncryptedMessenger.Domain.Models
         public Guid Id { get; set; }
         public Guid ChatId { get; set; }
         public required Chat Chat { get; set; }
-        public Guid SenderId { get; set; }
-        public required User Sender { get; set; }
+        public Guid UserId { get; set; }
+        public required User User { get; set; }
         public string MessageContent { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
+        public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
     }
 }

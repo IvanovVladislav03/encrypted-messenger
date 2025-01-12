@@ -14,5 +14,9 @@ namespace EncryptedMessenger.Domain.Models
         public string PublicKey { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        // Связи
+        public ICollection<ChatMember> ChatMembers { get; set; } = new List<ChatMember>();
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }
