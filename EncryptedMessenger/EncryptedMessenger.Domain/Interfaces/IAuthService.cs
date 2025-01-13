@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EncryptedMessenger.Domain.Interfaces
 {
-    internal interface IAuthService
+    public interface IAuthService
     {
         Task Login(string userName, string password);
-        Task Register(string userName, string password);
+        Task Register(string userName, string password, string publicKey);
     }
 }
