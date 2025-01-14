@@ -1,9 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using EncryptedMessenger.Infrastructure.Persistence;
+using EncryptedMessenger.Application.Servicies;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+
+
+services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
 // Добавление контекста базы данных
 services.AddDbContext<AppDbContext>(options =>

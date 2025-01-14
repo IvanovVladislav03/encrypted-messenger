@@ -8,10 +8,18 @@ namespace EncryptedMessenger.Domain.Models
 {
     public class User
     {
+        public User(string username, string passwordHash, string publicKey)
+        {
+            Id = Guid.NewGuid();
+            Username = username;
+            PasswordHash = passwordHash;
+            PublicKey = publicKey;
+            CreatedAt = DateTime.Now;
+        }
         public Guid Id { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
-        public string PublicKey { get; set; } = string.Empty;
+        public string Username { get; set; }
+        public string PasswordHash { get; set; } 
+        public string PublicKey { get; set; } 
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 

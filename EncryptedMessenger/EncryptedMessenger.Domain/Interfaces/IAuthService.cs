@@ -9,7 +9,7 @@ namespace EncryptedMessenger.Domain.Interfaces
 {
     public interface IAuthService
     {
-        Task Login(string userName, string password);
+        Task<string> Login(string userName, string password);
         Task Register(string userName, string password, string publicKey);
     }
 }
