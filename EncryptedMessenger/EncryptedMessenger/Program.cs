@@ -3,19 +3,25 @@ using System;
 using EncryptedMessenger.Infrastructure.Persistence;
 using EncryptedMessenger.Application.Servicies;
 using Microsoft.Extensions.Configuration;
+using EncryptedMessenger.Application.Configuration;
+using EncryptedMessenger.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 
-services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
-// Добавление контекста базы данных
-services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
+services.AddApplication(builder.Configuration);
+services.AddInfrastructure(builder.Configuration);
+
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
