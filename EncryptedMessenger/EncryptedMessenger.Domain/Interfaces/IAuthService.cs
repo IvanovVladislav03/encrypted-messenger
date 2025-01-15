@@ -10,6 +10,6 @@ namespace EncryptedMessenger.Domain.Interfaces
     public interface IAuthService
     {
         Task<string> Login(string userName, string password);
-        Task Register(string userName, string password, string publicKey);
+        Task Register(string username, string password, string publicKey);
     }
 }
