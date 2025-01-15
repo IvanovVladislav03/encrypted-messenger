@@ -16,7 +16,7 @@ namespace EncryptedMessenger.Application.Servicies
 
         public bool Verify(string password, string hashedPassword)
         {
-            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+            return BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace EncryptedMessenger.Infrastructure.Configuration
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IUserRepository, UserRepository>();
 
             return services;

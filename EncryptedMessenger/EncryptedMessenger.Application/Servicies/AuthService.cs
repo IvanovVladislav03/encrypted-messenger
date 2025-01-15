@@ -11,15 +11,30 @@ namespace EncryptedMessenger.Application.Servicies
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
-        private readonly PasswordHasher _passwordHasher;
-        public AuthService(IUserRepository userRepository, PasswordHasher passwordHasher)
+        private readonly IJwtService _jwtService;
+        private readonly IPasswordHasher _passwordHasher;
+        public AuthService(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtService jwtService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _jwtService = jwtService;
         }
-        public Task Login(string userName, string password)
+        public async Task<string> Login(string username, string password)
         {
-            throw new NotImplementedException();
+            var existingUser = await _userRepository.GetUserByUsernameAsync(username);
+
+            if (existingUser == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (!_passwordHasher.Verify(password, existingUser.PasswordHash))
+            {
+                throw new Exception("Failed to login");
+            }
+
+            var token = _jwtService.Generate(existingUser.Username, existingUser.Id);
+            return token;
         }
 
         public async Task Register(string username, string password, string publicKey)
