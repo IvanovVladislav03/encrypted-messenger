@@ -1,5 +1,6 @@
 import axios from "axios";
 import { generate } from "./encryptionService";
+import { savePrivateKeyToIndexedDB } from "./indexedDbService";
 
 const login = async (username, password) => {
   const loginData = (username, password);
@@ -22,16 +23,26 @@ const registry = async (username, password) => {
     publicKey: keypair.publicKey,
   };
   try {
-    const response = await axios.post("https://localhost:7211/api/auth/register", registryData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post(
+      "https://localhost:7211/api/auth/register",
+      registryData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 200) {
+      savePrivateKeyToIndexedDB(username, keypair.privateKey)
+        .then(() => console.log("Приватный ключ успешно сохранен"))
+        .catch((error) => console.error("Ошибка сохранения ключа:", error));
       return { success: true, message: "Успешно зарегестрирован!" };
     } else {
-      return { success: false, message: response.data.message || "Ошибка на сервере." };
+      return {
+        success: false,
+        message: response.data.message || "Ошибка на сервере.",
+      };
     }
   } catch (error) {
     return {
@@ -41,5 +52,5 @@ const registry = async (username, password) => {
   }
 };
 
-export {registry};
-export {login};
+export { registry };
+export { login };
