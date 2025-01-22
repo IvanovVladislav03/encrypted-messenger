@@ -10,8 +10,20 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { registry } from "../services/authService";
+
 
 const Signin = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleRegister = async () => {
+    const result = await registry(username, password);
+    
+    setMessage(result.message);
+  };
   return (
     <Box className="flex items-center justify-center min-h-screen">
       <Box className="shadow-lg bg-white p-4 rounded-md w-96">
@@ -26,7 +38,7 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Login</FormLabel>
               <InputGroup>
-                <Input className="text-black border-b-2 border-solid" />
+                <Input value={username} onChange={(e) => setUsername(e.target.value)} className="text-black border-b-2 border-solid" />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <AddIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -35,7 +47,7 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Password</FormLabel>
               <InputGroup>
-                <Input className="text-black border-b-2 border-solid" />
+                <Input value={password} onChange={(e) => setPassword(e.target.value)} className="text-black border-b-2 border-solid" />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <LockIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -44,7 +56,7 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Confirm password</FormLabel>
               <InputGroup>
-                <Input className="text-black border-b-2 border-solid" />
+                <Input  className="text-black border-b-2 border-solid" />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <LockIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -57,10 +69,11 @@ const Signin = () => {
               Sign In
             </Link>
           </Text>
-          <Button className="bg-blue-600 rounded-md text-white px-6 py-2 mt-4">
+          <Button onClick={handleRegister} className="bg-blue-600 rounded-md text-white px-6 py-2 mt-4">
             Register
           </Button>
         </Box>
+        {message && <Text mt="4" color="black">{message}</Text>}
       </Box>
     </Box>
   );

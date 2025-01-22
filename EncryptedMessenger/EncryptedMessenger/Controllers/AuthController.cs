@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EncryptedMessenger.WebAPI.Controllers
 {
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
