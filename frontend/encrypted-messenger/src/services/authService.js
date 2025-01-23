@@ -1,11 +1,31 @@
 import axios from "axios";
 import { generate } from "./encryptionService";
-import { savePrivateKeyToIndexedDB } from "./indexedDbService";
+import { savePrivateKeyToIndexedDB, getPrivateKeyFromIndexedDB } from "./indexedDbService";
 
 const login = async (username, password) => {
-  const loginData = (username, password);
+  const loginData = {
+    username: username,
+    password: password,
+  };
   try {
-    const response = axios.post("");
+    const response = await axios.post(
+      "https://localhost:7211/api/auth/login",
+      loginData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    if (response.status == 200){
+      console.log(getPrivateKeyFromIndexedDB(username))
+      return { success: true, message: "Успешно!" };
+    }
+    return {
+      success: false,
+      message: response.data.message || "Ошибка на сервере.",
+    };
   } catch (error) {
     return {
       success: false,

@@ -10,15 +10,22 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { generate } from "../services/encryptionService.js";
+import { login } from "../services/authService";
+import { useState } from "react";
 
 
 
 const Signin = () => {
 
-  const handleGenerate = async () => {
-    generate().then(keys => console.log(keys));
-  }
+  const handleLogin = async () => {
+    const result = await login(username, password);
+    
+    setMessage(result.message);
+  };
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   return (
     <Box className="flex items-center justify-center min-h-screen">
@@ -37,7 +44,7 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Login</FormLabel>
               <InputGroup>
-                <Input className="text-black border-b-2 border-solid" />
+                <Input value={username} onChange={(e) => setUsername(e.target.value)} className="text-black border-b-2 border-solid" />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <AddIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -46,7 +53,7 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Password</FormLabel>
               <InputGroup>
-                <Input className="text-black border-b-2 border-solid" />
+                <Input value={password} onChange={(e) => setPassword(e.target.value)} className="text-black border-b-2 border-solid" />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <LockIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -59,13 +66,17 @@ const Signin = () => {
               Sign Up
             </Link>
           </Text>
-          <Button className="bg-blue-600 rounded-md text-white px-6 py-2 mt-4" onClick={handleGenerate}>
+          <Button  className="bg-blue-600 rounded-md text-white px-6 py-2 mt-4" onClick={handleLogin}>
             Login
           </Button>
         </Box>
+        {message && <Text mt="4" color="black">{message}</Text>}
       </Box>
+      
     </Box>
   );
 };
 
 export default Signin;
+
+
