@@ -13,16 +13,42 @@ import {
 import { useState } from "react";
 import { registry } from "../services/authService";
 
-
 const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState("");
 
   const handleRegister = async () => {
-    const result = await registry(username, password);
-    
-    setMessage(result.message);
+    if (passwordMatch) {
+      try {
+        const result = await registry(username, password);
+        setMessage(result.message);
+      } catch (error) {
+        setMessage("Ошибка при регистрации. Попробуйте снова.");
+      }
+    }
+  };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (confirmPassword && e.target.value !== confirmPassword) {
+      setPasswordMatch(false);
+      setMessage("Пароли не совпадают");
+    } else {
+      setPasswordMatch(true);
+      setMessage("");
+    }
+  };
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    if (password && e.target.value !== password) {
+      setPasswordMatch(false);
+      setMessage("Пароли не совпадают");
+    } else {
+      setPasswordMatch(true);
+      setMessage("");
+    }
   };
   return (
     <Box className="flex items-center justify-center min-h-screen">
@@ -38,7 +64,11 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Login</FormLabel>
               <InputGroup>
-                <Input value={username} onChange={(e) => setUsername(e.target.value)} className="text-black border-b-2 border-solid" />
+                <Input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="text-black border-b-2 border-solid"
+                />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <AddIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -47,7 +77,11 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Password</FormLabel>
               <InputGroup>
-                <Input value={password} onChange={(e) => setPassword(e.target.value)} className="text-black border-b-2 border-solid" />
+                <Input
+                  value={password}
+                  onChange={handlePasswordChange}
+                  className="text-black border-b-2 border-solid"
+                />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <LockIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -56,7 +90,11 @@ const Signin = () => {
             <FormControl>
               <FormLabel className="text-black">Confirm password</FormLabel>
               <InputGroup>
-                <Input  className="text-black border-b-2 border-solid" />
+                <Input
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  className="text-black border-b-2 border-solid"
+                />
                 <InputRightElement className="items-center flex h-full mx-2">
                   <LockIcon w={4} h={4} color="gray.400" />
                 </InputRightElement>
@@ -69,11 +107,19 @@ const Signin = () => {
               Sign In
             </Link>
           </Text>
-          <Button onClick={handleRegister} className="bg-blue-600 rounded-md text-white px-6 py-2 mt-4">
+          <Button
+            onClick={handleRegister}
+            disabled={!passwordMatch || !username || !password}
+            className="bg-blue-600 rounded-md text-white px-6 py-2 mt-4"
+          >
             Register
           </Button>
         </Box>
-        {message && <Text mt="4" color="black">{message}</Text>}
+        {message && (
+          <Text mt="4" color="black">
+            {message}
+          </Text>
+        )}
       </Box>
     </Box>
   );
