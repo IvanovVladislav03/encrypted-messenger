@@ -71,8 +71,7 @@ const Signin = () => {
           </Button>
         </Box>
         {message && <Text mt="4" color="black">{message}</Text>}
-      </Box>
-      
+      </Box> 
     </Box>
   );
 };
