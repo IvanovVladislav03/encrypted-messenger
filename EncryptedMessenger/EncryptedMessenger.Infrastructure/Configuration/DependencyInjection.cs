@@ -25,6 +25,8 @@ namespace EncryptedMessenger.Infrastructure.Configuration
 
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddScoped<IChatRepository, ChatRepository>();
+
             return services;
         }
     }
