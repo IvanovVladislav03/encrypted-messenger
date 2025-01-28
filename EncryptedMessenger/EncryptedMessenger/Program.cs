@@ -7,6 +7,7 @@ using EncryptedMessenger.Application.Configuration;
 using EncryptedMessenger.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using EncryptedMessenger.WebAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -61,6 +62,7 @@ services.AddInfrastructure(builder.Configuration);
 
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+services.AddSignalR();
 
 var app = builder.Build();
 
@@ -78,5 +80,7 @@ app.UseAuthentication();
 app.UseAuthorization();
     
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chat");
 
 app.Run();
