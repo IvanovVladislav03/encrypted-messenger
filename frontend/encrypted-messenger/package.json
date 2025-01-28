@@ -20,6 +20,7 @@
     "@chakra-ui/select": "^2.1.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@microsoft/signalr": "^8.0.7",
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
     "framer-motion": "^12.0.5",

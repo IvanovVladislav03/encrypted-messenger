@@ -4,6 +4,7 @@ import { Card, CardBody } from "@chakra-ui/card";
 import { Avatar } from "@chakra-ui/avatar";
 import { useEffect, useState } from "react";
 import { GetAllUsers } from "../Repositories/userRepository";
+import { joinChat } from "../services/chatService";
 
 const Main = () => {
   const [search, setSearch] = useState("");
@@ -28,7 +29,9 @@ const Main = () => {
     user.username.toLowerCase().includes(search.toLowerCase()) 
   );
 
-  const handleSelectUser = (user) => {
+  const handleSelectUser = async (user) => {
+    console.log(user)
+    await joinChat(user.username, "testChat")
     setSelectedUser(user);
     setSearch(user.username); 
   };
@@ -47,7 +50,7 @@ const Main = () => {
           ? filteredUsers.map((user) => (
               <Card
                 onClick={() => handleSelectUser(user)}
-                className="bg-gray-100 hover:bg-gray-200 cursor-pointer rounded-md text-blue-600 text-l"
+                className="bg-gray-100 hover:bg-gray-200 cursor-pointer rounded-md text-blue-600 font-semibold text-l"
               >
                 <CardBody className="items-center flex m-1">
                   <Avatar className="size-10 mr-2"></Avatar>
