@@ -8,11 +8,12 @@ namespace EncryptedMessenger.Domain.Models
 {
     public class ChatMember
     {
+
         public Guid Id { get; set; }
         public Guid ChatId { get; set; }
-        public required Chat Chat { get; set; }
+        public Chat Chat { get; set; }
         public Guid UserId { get; set; }
-        public required User User { get; set; }
+        public User User { get; set; } 
         public DateTime AddedAt { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace EncryptedMessenger.Domain.Interfaces
         Task<Chat> GetChatByIdAsync(Guid id);
         Task CreateChatAsync(Chat chat);
         Task SaveMessageAsync(Message message);
+        Task<IEnumerable<Chat>> GetChatsByUserId(Guid userId);
         Task<IEnumerable<Message>> GetMessagesByChatIdAsync(Guid chatId);
     }
 }

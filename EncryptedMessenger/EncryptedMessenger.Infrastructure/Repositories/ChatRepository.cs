@@ -35,6 +35,12 @@ namespace EncryptedMessenger.Infrastructure.Repositories
             return _mapper.Map<Chat>(chat);
         }
 
+        public async Task<IEnumerable<Chat>> GetChatsByUserId(Guid userId)
+        {
+            var chats = await _context.Chats.Where(c => c.ChatMembers.Any(m => m.UserId == userId)).ToListAsync();
+            return chats;
+        }
+
         public async Task<IEnumerable<Message>> GetMessagesByChatIdAsync(Guid chatId)
         {
             var messages = await _context.Messages

@@ -8,6 +8,14 @@ namespace EncryptedMessenger.Domain.Models
 {
     public class Chat
     {
+        public Chat(string chatName, string publicKey, bool isGroup)
+        {
+            Id = Guid.NewGuid();
+            ChatName = chatName;
+            PublicKey = publicKey;
+            IsGroup = isGroup;
+            CreatedAt = DateTime.Now;
+        }
         public Guid Id { get; set; }
         public string ChatName { get; set; } = string.Empty;
         public bool IsGroup { get; set; }
