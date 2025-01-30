@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EncryptedMessenger.Application.DTOs;
 using EncryptedMessenger.Domain.Interfaces;
 using EncryptedMessenger.Domain.Models;
 using EncryptedMessenger.Infrastructure.Persistence;
@@ -37,7 +38,11 @@ namespace EncryptedMessenger.Infrastructure.Repositories
 
         public async Task<IEnumerable<Chat>> GetChatsByUserId(Guid userId)
         {
-            var chats = await _context.Chats.Where(c => c.ChatMembers.Any(m => m.UserId == userId)).ToListAsync();
+            var chats = await _context.Chats
+                .Include(c => c.ChatMembers)
+                .Where(c => c.ChatMembers.Any(m => m.UserId == userId))
+                .ToListAsync();
+
             return chats;
         }
 

@@ -2,6 +2,8 @@
 using EncryptedMessenger.Domain.Interfaces;
 using EncryptedMessenger.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace EncryptedMessenger.WebAPI.Controllers
 {
@@ -17,11 +19,23 @@ namespace EncryptedMessenger.WebAPI.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUserChats(Guid userId)
+        [HttpGet]
+        public async Task<IActionResult> GetUserChats()
         {
-            var chats = await _chatRepository.GetChatsByUserId(userId);
-            return Ok(chats);
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ??
+                throw new UnauthorizedAccessException("User is not authenticated or has invalid identifier.");
+
+            var chats = await _chatRepository.GetChatsByUserId(new Guid(userId));
+
+            var chatsDto = chats.Select(c => new ChatDto()
+            {
+                Id = c.Id,
+                ChatName = c.ChatName,
+                IsGroup = c.IsGroup,
+                MemberIds = c.ChatMembers.Select(cm => cm.UserId).ToList()
+            });
+
+            return Ok(chatsDto);
         }
 
         [HttpPost("create")]

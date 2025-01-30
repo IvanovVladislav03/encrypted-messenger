@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace EncryptedMessenger.Domain.Models
@@ -11,6 +12,8 @@ namespace EncryptedMessenger.Domain.Models
 
         public Guid Id { get; set; }
         public Guid ChatId { get; set; }
+
+        [JsonIgnore]
         public Chat Chat { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; } 

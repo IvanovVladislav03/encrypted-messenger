@@ -8,6 +8,13 @@ namespace EncryptedMessenger.Domain.Models
 {
     public class Message
     {
+        public Message(Guid chatId, Guid userId, string messageContent)
+        {
+            Id = Guid.NewGuid();
+            ChatId = chatId;
+            UserId = userId;
+            MessageContent = messageContent;
+        }
         public Guid Id { get; set; }
         public Guid ChatId { get; set; }
         public required Chat Chat { get; set; }
