@@ -12,14 +12,17 @@ import {
 } from "@chakra-ui/react";
 import { login } from "../services/authService";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Signin = () => {
-
+  const navigate = useNavigate()
   const handleLogin = async () => {
     const result = await login(username, password);
-    
+    if (result.success){
+      navigate("/main")
+    }
     setMessage(result.message);
   };
 

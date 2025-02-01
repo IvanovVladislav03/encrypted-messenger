@@ -29,6 +29,7 @@ namespace EncryptedMessenger.WebAPI.Controllers
 
             var cookieOptions = new CookieOptions()
             {
+                Path = "/",
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
@@ -37,7 +38,7 @@ namespace EncryptedMessenger.WebAPI.Controllers
 
             HttpContext.Response.Cookies.Append("cookies-token", token, cookieOptions);
 
-            return Ok(new { Message = "User logged successfully" });
+            return Ok(token);
         }
     }
 }

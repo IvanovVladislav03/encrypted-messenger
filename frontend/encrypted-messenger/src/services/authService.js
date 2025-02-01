@@ -19,7 +19,7 @@ const login = async (username, password) => {
       }
     );
     if (response.status == 200){
-      console.log(getPrivateKeyFromIndexedDB(username))
+      localStorage.setItem("token", response.data)
       return { success: true, message: "Успешно!" };
     }
     return {
