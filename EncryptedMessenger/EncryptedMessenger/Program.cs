@@ -63,6 +63,11 @@ services.AddInfrastructure(builder.Configuration);
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 services.AddSignalR();
+services.AddStackExchangeRedisCache(options =>
+{
+    var connection = builder.Configuration.GetConnectionString("Redis");
+    options.Configuration = connection;
+});
 
 var app = builder.Build();
 
