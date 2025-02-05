@@ -8,7 +8,8 @@ namespace EncryptedMessenger.Application.DTOs
 {
     public class ConnectionDto
     {
-        public string ChatName { get; set; }
+        public Guid ChatId { get; set; }
+        public Guid UserId { get; set; }
         public string Username { get; set; }
 
     }
