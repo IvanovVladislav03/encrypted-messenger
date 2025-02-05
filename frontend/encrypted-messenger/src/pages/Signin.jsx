@@ -13,14 +13,19 @@ import {
 import { login } from "../services/authService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { jwtDecode } from "jwt-decode";
+import { useUser } from "../../UserContext";
 
 
 const Signin = () => {
   const navigate = useNavigate()
+  const {setUser} = useUser();
   const handleLogin = async () => {
     const result = await login(username, password);
     if (result.success){
+      const decodedToken = jwtDecode(localStorage.getItem("token"))
+      console.log(decodedToken)
+      setUser({ userId: decodedToken.sub, username: decodedToken.unique_name });
       navigate("/main")
     }
     setMessage(result.message);
@@ -29,6 +34,7 @@ const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  
 
   return (
     <Box className="flex items-center justify-center min-h-screen">

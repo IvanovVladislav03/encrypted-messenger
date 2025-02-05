@@ -5,8 +5,10 @@ import { Avatar } from "@chakra-ui/avatar";
 import { useEffect, useState } from "react";
 import { GetAllUsers } from "../Repositories/userRepository";
 import { getUserChats } from "../Repositories/chatRepository";
+import { useChat } from "../../hooks/useChat";
+import { useUser } from "../../UserContext";
 
-const UserList = ({ onSelectUser }) => {
+const UserList = ({ onSelectChat }) => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [chats, setChats] = useState([]);
@@ -40,6 +42,11 @@ const UserList = ({ onSelectUser }) => {
 
   const handleSelectUser = (user) => {
     onSelectUser(user);
+  };
+
+  const handleSelectChat = (chat) => {
+    onSelectChat(chat);
+    
   };
 
   return (
@@ -78,6 +85,7 @@ const UserList = ({ onSelectUser }) => {
           chats.map((chat) => (
             <Card
               key={chat.id}
+              onClick={() => handleSelectChat(chat)}
               className="bg-gray-100 hover:bg-gray-200 cursor-pointer rounded-md text-blue-600 font-semibold text-l"
             >
               <CardBody className="items-center flex m-1">
