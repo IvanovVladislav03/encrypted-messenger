@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace EncryptedMessenger.Application.DTOs
 {
-    public class ChatDto
+    public class ChatContentDto
     {
-        public Guid Id { get; set; }
-        public string ChatName { get; set; } = string.Empty;
-        public bool IsGroup { get; set; }
+        public Guid ChatId { get; set; }
         public List<Guid> MemberIds { get; set; } = new();
+        public List<MessageDto> Messages { get; set; } = new();
     }
-
 }

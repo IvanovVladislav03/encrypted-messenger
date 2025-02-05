@@ -40,6 +40,7 @@ namespace EncryptedMessenger.Infrastructure.Repositories
         {
             var chats = await _context.Chats
                 .Include(c => c.ChatMembers)
+                .Include(c => c.Messages)
                 .Where(c => c.ChatMembers.Any(m => m.UserId == userId))
                 .ToListAsync();
 
@@ -49,6 +50,7 @@ namespace EncryptedMessenger.Infrastructure.Repositories
         public async Task<IEnumerable<Message>> GetMessagesByChatIdAsync(Guid chatId)
         {
             var messages = await _context.Messages
+                .Include(m => m.User)
                 .Where(m => m.ChatId == chatId) 
                 .ToListAsync();
 

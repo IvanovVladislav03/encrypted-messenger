@@ -14,12 +14,13 @@ namespace EncryptedMessenger.Domain.Models
             ChatId = chatId;
             UserId = userId;
             MessageContent = messageContent;
+            CreatedAt = DateTime.Now;
         }
         public Guid Id { get; set; }
         public Guid ChatId { get; set; }
-        public required Chat Chat { get; set; }
+        public Chat Chat { get; set; }
         public Guid UserId { get; set; }
-        public required User User { get; set; }
+        public User User { get; set; }
         public string MessageContent { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();

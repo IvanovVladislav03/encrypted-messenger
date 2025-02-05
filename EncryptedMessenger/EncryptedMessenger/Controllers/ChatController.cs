@@ -2,6 +2,7 @@
 using EncryptedMessenger.Domain.Interfaces;
 using EncryptedMessenger.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -27,13 +28,39 @@ namespace EncryptedMessenger.WebAPI.Controllers
 
             var chats = await _chatRepository.GetChatsByUserId(new Guid(userId));
 
-            var chatsDto = chats.Select(c => new ChatDto()
+            
+
+            var chatsDto = chats.Select(c => new ChatViewDto()
             {
                 Id = c.Id,
                 ChatName = c.ChatName,
                 IsGroup = c.IsGroup,
-                MemberIds = c.ChatMembers.Select(cm => cm.UserId).ToList()
             });
+
+            return Ok(chatsDto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetChat(Guid id)
+        {
+            var chat = await _chatRepository.GetChatByIdAsync(id);
+
+            var messages = await _chatRepository.GetMessagesByChatIdAsync(id);
+
+            var messagesDto = messages.Select(m => new MessageDto()
+            {
+                Username = m.User.Username,
+                MessageContent = m.MessageContent,
+                CreatedAt = m.CreatedAt,
+                Attachments = m.Attachments,
+            }).ToList();
+
+            var chatsDto = new ChatContentDto()
+            {
+                ChatId = chat.Id,
+                MemberIds = chat.ChatMembers.Select(c => c.Id).ToList(),
+                Messages = messagesDto
+            };
 
             return Ok(chatsDto);
         }
