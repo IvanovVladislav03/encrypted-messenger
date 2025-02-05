@@ -6,9 +6,6 @@ const GetAllUsers = async () => {
     const data = response.data;
 
     if (Array.isArray(data)) {
-      data.forEach((user) => {
-        console.log(`Username: ${user.username}, PublicKey: ${user.publicKey}`);
-      });
       return(data)
     }
   } catch (error) {

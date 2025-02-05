@@ -1,6 +1,8 @@
 import axios from "axios";
 import { generate } from "./encryptionService";
 import { savePrivateKeyToIndexedDB, getPrivateKeyFromIndexedDB } from "./indexedDbService";
+import { jwtDecode } from "jwt-decode";
+import { useUser } from "../../UserContext";
 
 const login = async (username, password) => {
   const loginData = {
@@ -20,6 +22,7 @@ const login = async (username, password) => {
     );
     if (response.status == 200){
       localStorage.setItem("token", response.data)
+
       return { success: true, message: "Успешно!" };
     }
     return {
