@@ -70,13 +70,13 @@ namespace EncryptedMessenger.WebAPI.Controllers
         {
             var chat = new Chat(createChatDto.ChatName, createChatDto.PublicKey, createChatDto.ChatMembers.Count > 2 ? true : false);
             var chatMembers = new List<ChatMember>();
-            foreach (var memberId in createChatDto.ChatMembers)
+            foreach (var memberName in createChatDto.ChatMembers)
             {
                 var chatMember = new ChatMember()
                 {
                     Id = Guid.NewGuid(),
                     ChatId = chat.Id,
-                    UserId = (await _userRepository.GetUserByUsernameAsync(memberId)).Id,
+                    UserId = (await _userRepository.GetUserByUsernameAsync(memberName)).Id,
                     AddedAt = DateTime.UtcNow,
                 };
                 chatMembers.Add(chatMember);

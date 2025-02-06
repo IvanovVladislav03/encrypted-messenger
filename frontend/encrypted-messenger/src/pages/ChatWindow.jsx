@@ -28,10 +28,10 @@ const ChatWindow = ({ selectedChat }) => {
     setMessage("");
   };
   return (
-    <Box className="relative h-screen p-4">
+    <Box className="relative h-screen">
       <Box className="flex items-center mb-4">
         {selectedChat ? (
-          <Card className="bg-gray-100 cursor-pointer text-blue-600 font-semibold text-l w-full p-2">
+          <Card className="border-l border-gray-400 border-solid bg-gray-200  text-blue-600 font-semibold text-l w-full p-2">
             <CardBody className="items-center flex m-1">
               <Avatar className="size-12 mr-2" />
               <Text>{selectedChat.chatName}</Text>
@@ -41,14 +41,14 @@ const ChatWindow = ({ selectedChat }) => {
           <Text>Выберите чат</Text>
         )}
       </Box>
-      <Box className="flex flex-col overflow-auto max-h-[75%] mb-4">
+      <Box className="flex flex-col overflow-auto max-h-[75%] mb-4 mx-3">
         {messages.map((msg, index) => (
           <Box
             key={index}
             className={`w-1/3 rounded-lg px-2 pb-2 mb-2 ${
               msg.username === user.username
-                ? "bg-blue-700 rounded-br-none ml-auto"
-                : "bg-red-700 rounded-bl-none"
+                ? "bg-blue-500 rounded-br-none ml-auto"
+                : "bg-purple-500 rounded-bl-none"
             }`}
           >
             <Text className="top-1 mb-1 text-white font-semibold">
