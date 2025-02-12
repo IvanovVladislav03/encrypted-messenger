@@ -1,5 +1,5 @@
 import { Input } from "@chakra-ui/input";
-import { Box, VStack, Text } from "@chakra-ui/react";
+import { Box, VStack, Text, Button } from "@chakra-ui/react";
 import { Card, CardBody } from "@chakra-ui/card";
 import { Avatar } from "@chakra-ui/avatar";
 import { useEffect, useState } from "react";
@@ -46,7 +46,8 @@ const UserList = ({ onSelectChat }) => {
     onSelectChat(chat);
     
   };
-
+  
+  
   return (
     <Box className="m-4">
       <Input
