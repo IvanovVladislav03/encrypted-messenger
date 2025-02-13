@@ -9,7 +9,7 @@ namespace EncryptedMessenger.Application.DTOs
     public class ChatContentDto
     {
         public Guid ChatId { get; set; }
-        public List<Guid> MemberIds { get; set; } = new();
+        public List<UserDto> Members { get; set; } = new();
         public List<MessageDto> Messages { get; set; } = new();
     }
 }

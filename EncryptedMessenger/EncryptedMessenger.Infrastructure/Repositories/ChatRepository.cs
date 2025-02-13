@@ -30,7 +30,8 @@ namespace EncryptedMessenger.Infrastructure.Repositories
         public async Task<Chat> GetChatByIdAsync(Guid id)
         {
             var chat = await _context.Chats
-                .Include(c => c.Messages) // Загрузка связанных сообщений
+                .Include(c => c.Messages)
+                .Include(c => c.ChatMembers)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             return _mapper.Map<Chat>(chat);

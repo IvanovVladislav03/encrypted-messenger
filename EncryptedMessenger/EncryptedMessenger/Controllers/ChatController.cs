@@ -55,10 +55,18 @@ namespace EncryptedMessenger.WebAPI.Controllers
                 Attachments = m.Attachments,
             }).ToList();
 
+            var chatUsersIds = chat.ChatMembers.Select(c => c.UserId);
+            List<UserDto> chatUsers = new List<UserDto>();
+            foreach (var userId in chatUsersIds)
+            {
+                var user = await _userRepository.GetUserByIdAsync(userId);
+                chatUsers.Add(new UserDto() {Username = user.Username, PublicKey = user.PublicKey});
+            }
+
             var chatsDto = new ChatContentDto()
             {
                 ChatId = chat.Id,
-                MemberIds = chat.ChatMembers.Select(c => c.Id).ToList(),
+                Members = chatUsers,
                 Messages = messagesDto
             };
 
