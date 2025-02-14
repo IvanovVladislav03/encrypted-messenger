@@ -4,47 +4,49 @@ import { Card, CardBody } from "@chakra-ui/card";
 import { Avatar } from "@chakra-ui/avatar";
 import { useEffect, useState } from "react";
 import { GetAllUsers } from "../Repositories/userRepository";
-import { getUserChats } from "../Repositories/chatRepository";
+import { createChat, getUserChats } from "../Repositories/chatRepository";
+import { useUser } from "../../UserContext";
 
 const UserList = ({ onSelectChat }) => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [chats, setChats] = useState([]);
+  const { user } = useUser();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const userList = await GetAllUsers();
-        setUsers(userList);
-      } catch (error) {
-        console.error("Ошибка при получении пользователей:", error);
-      }
-    };
-
-    const fetchChats = async () => {
-      try {
-        const chatList = await getUserChats();
-        setChats(chatList);
-      } catch (error) {
-        console.error("Ошибка при получении чатов:", error);
-      }
-    };
-
     fetchUsers();
     fetchChats();
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const userList = await GetAllUsers();
+      setUsers(userList);
+    } catch (error) {
+      console.error("Ошибка при получении пользователей:", error);
+    }
+  };
+
+  const fetchChats = async () => {
+    try {
+      const chatList = await getUserChats();
+      setChats(chatList);
+    } catch (error) {
+      console.error("Ошибка при получении чатов:", error);
+    }
+  };
 
   const filteredUsers = users.filter((user) =>
     user.username.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleSelectUser = (user) => {
-    onSelectUser(user);
+  const handleSelectUser = async (selectedUser) => {
+    await createChat(`${user.username} ${selectedUser.username}`,"",[selectedUser.username, user.username])
+    await fetchChats();
   };
 
   const handleSelectChat = (chat) => {
-    onSelectChat(chat);
-    
+    onSelectChat(chat); 
   };
   
   
