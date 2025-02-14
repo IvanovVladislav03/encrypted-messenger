@@ -23,9 +23,12 @@ const Signin = () => {
   const handleLogin = async () => {
     const result = await login(username, password);
     if (result.success){
+      
       const decodedToken = jwtDecode(localStorage.getItem("token"))
-      console.log(decodedToken)
-      setUser({ userId: decodedToken.sub, username: decodedToken.unique_name });
+      const userData = { userId: decodedToken.sub, username: decodedToken.unique_name };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+
       navigate("/main")
     }
     setMessage(result.message);
